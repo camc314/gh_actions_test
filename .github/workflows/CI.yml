@@ -56,9 +56,12 @@ jobs:
           target_sha_msg=$( cat target_sha_commit.json | jq -r '.commit.message' )
 
           cur_date=$(date +"%d/%m/%Y %H:%M %Z")
+        
+          echo "<!-- CI Comment -->" > comment.md
+          echo "Build updated at $cur_date" >> comment.md
+          echo "Produced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url)" >> comment.md
+          echo "Build is available at <BUILD_URL>" >> comment.md
 
-          echo $'<!-- CI Comment --> \nBuild updated at $cur_date \nProduced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url) \nBuild is available at <BUILD_URL>' > comment.md
-          
           cat comment.md
 
       - name: Find Comment
