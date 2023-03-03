@@ -58,8 +58,11 @@ jobs:
           cur_date=$(date +"%d/%m/%Y %H:%M %Z")
         
           echo "<!-- CI Comment -->" > comment.md
+          echo "" >> comment.md
           echo "Build updated at $cur_date" >> comment.md
+          echo "" >> comment.md
           echo "Produced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url)" >> comment.md
+          echo "" >> comment.md
           echo "Build is available at <BUILD_URL>" >> comment.md
 
           cat comment.md
@@ -69,7 +72,7 @@ jobs:
         id: fc
         continue-on-error: true
         with:
-          issue-number: github.event.number
+          issue-number: ${{ github.event.number }}
           comment-author: "github-actions[bot]"
           body-includes: <!-- CI Comment -->
 
