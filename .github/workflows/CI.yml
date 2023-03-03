@@ -31,3 +31,13 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
           https://api.github.com/repos/camc314/gh_actions_test/commits/$target_sha > target_sha_commit.json
+
+          curl -L \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/camc314/gh_actions_test/commits/$current_sha > current_sha_commit.json
+
+          echo $( cat current_sha_commit.json | jq -r '.commit.message' )
+          echo $( cat target_sha_commit.json | jq -r '.commit.message' )
+
