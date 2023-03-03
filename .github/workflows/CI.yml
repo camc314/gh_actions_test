@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Test
         run: |
+          echo ${{ toJSON(github) }}
+
           curl -L \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
@@ -29,6 +31,8 @@ jobs:
           echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
           cat commit2.json
 
+          # Log which commit is getting 
+
           # log commit message
           # echo $(cat commit.json | jq -r '.commit.message')
 
@@ -42,18 +46,5 @@ jobs:
 
 
 
-
-          # echo ${{ github.head.sha }}
-          # get info for the commit that triggered the workflow
-          # git log -1 ${{ github.head.sha }}
-          # log github context + stringify it
-          # echo the commit sha
-          # echo ${{ github.sha }}
-          # echo the commit message
-          # echo ${{ github.event.head_commit.message }}
-          # echo the commit author
-          # echo ${{ github.event.head_commit.author.name }}
-          # echo the commit time
-          # echo ${{ github.event.head_commit.timestamp }}
-          #echo the current time
-          # echo $(date)
+          
+          echo Finished building at: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
