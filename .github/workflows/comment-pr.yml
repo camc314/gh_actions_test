@@ -20,10 +20,6 @@ jobs:
         steps:
           - name: Get Comment
             run: |
-              # echo ${{ toJson(github) }}
-
-              # echo ${{ github.repository }}
-
               curl -L \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
