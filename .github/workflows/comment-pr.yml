@@ -12,7 +12,6 @@ on:
                 required: false
                 type: string
 
-
 jobs:
     comment-pr:
         name: Comment PR
@@ -28,6 +27,14 @@ jobs:
 
               commit_message=$(cat commit.json | jq -r '.commit.message')
 
+
+              # Typically the commit will follow the following format (with the SHA's being the actual SHA's):
+              # Merge current_sha into target_sha
+              # This is done to ensure that the PR that is being merged is up to date with the target branch
+              # We want to get the SHA's of the commits that were merged into the target branch for use in the comment
+              # These SHA's refer to:
+              #   current_sha: The commit that was merged into the target branch. This will be the commit that the PR was made from (usually a feature/dev branch)
+              #   target_sha: The commit that the current_sha was merged into. This will be a commit on the MAIN branch (usually develop/main/master ect.)
               current_sha=$(echo $commit_message | sed 's/.*Merge \([^ ]*\) into \([^ ]*\).*/\1/')
               target_sha=$(echo $commit_message | sed 's/.*Merge \([^ ]*\) into \([^ ]*\).*/\2/')
               echo "Current SHA: $current_sha"
@@ -53,6 +60,7 @@ jobs:
 
               cur_date=$(date +"%d/%m/%Y %H:%M %Z")
         
+              # Create the comment MD file
               echo "<!-- CI Comment -->" > comment.md
 
               if [ ${{ inputs.build-succeeded }} = true ]; then
