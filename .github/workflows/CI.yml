@@ -22,4 +22,6 @@ jobs:
           echo "Commit message: $commit_message"
 
           current_sha=$(echo $commit_message | sed 's/.*Merge \([^ ]*\) into \([^ ]*\).*/\1/')
+          target_sha=$(echo $commit_message | sed 's/.*Merge \([^ ]*\) into \([^ ]*\).*/\2/')
           echo "Current SHA: $current_sha"
+          echo "Target SHA: $target_sha"
