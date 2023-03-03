@@ -18,5 +18,7 @@ jobs:
           https://api.github.com/repos/camc314/gh_actions_test/commits/${{ github.sha }} > commit.json
 
           commit_msg=$(cat commit.json | jq -r '.commit.message')
+          echo "Commit message: $commit_msg"
+
           current_sha=$(echo $commit_message | sed 's/.*Merge \([^ ]*\) into \([^ ]*\).*/\1/')
           echo "First sha: $current_sha"
