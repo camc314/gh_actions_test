@@ -11,7 +11,6 @@ jobs:
     steps:
       - name: Test
         run: |
-
           curl -L \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
@@ -19,57 +18,5 @@ jobs:
           https://api.github.com/repos/camc314/gh_actions_test/commits/${{ github.sha }} > commit.json
 
           commit_msg=$(cat commit.json | jq -r '.commit.message')
-
-          # The commit message should be "Merge <commit sha> into <commit sha>"
-          # `current_sha` is the sha of the commit that is being merged into `target_sha`
-          # e.g. if we were merging a commit on cam/dev/feature into cam/main, then
-          # `current_sha` would be the sha of the commit on cam/dev/feature and
-          # `target_sha` would be the sha of the commit on cam/main
           current_sha=$(echo $commit_message | sed 's/.*Merge \([^ ]*\) into \([^ ]*\).*/\1/')
-          # target_sha=$(echo $commit_message | sed 's/.*Merge \([^ ]*\) into \([^ ]*\).*/\2/')
-
           echo "First sha: $current_sha"
-          # echo "Second sha: $target_sha" 
-
-          # Get the commit message of the commit that is being merged into `target_sha`
-          # curl -L \
-          # -H "Accept: application/vnd.github+json" \
-          # -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          # -H "X-GitHub-Api-Version: 2022-11-28" \
-          # https://api.github.com/repos/camc314/gh_actions_test/commits/${{ target_sha }} > target_sha_commit.json
-
-          # Get the commit message of the commit `target_sha` is being merged into
-          # curl -L \
-          # -H "Accept: application/vnd.github+json" \
-          # -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          # -H "X-GitHub-Api-Version: 2022-11-28" \
-          # https://api.github.com/repos/camc314/gh_actions_test/commits/${{ current_sha }} > current_sha_commit.json
-
-          # Get the commit message of the commit that is being merged into `target_sha`
-          # cat current_sha_commit.json | jq -r '.commit.message'
-          # cat target_sha_commit.json | jq -r '.commit.message'
-
-
-
-
-          # cat commit.json
-          # echo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-          # cat commit2.json
-
-          # Log which commit is getting 
-
-          # log commit message
-          # echo $(cat commit.json | jq -r '.commit.message')
-
-          # log commit author
-
-          # echo $(cat commit.json | jq -r '.commit.author.name')
-
-          # log commit time
-
-          # echo $(cat commit.json | jq -r '.commit.author.date')
-
-
-
-          
-          echo Finished building at: $(date -u +"%Y-%m-%dT%H:%M:%SZ")
