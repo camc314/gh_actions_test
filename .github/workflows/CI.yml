@@ -42,13 +42,33 @@ jobs:
           echo $( cat target_sha_commit.json | jq -r '.commit.message' )
 
           # Format to String
-          # Build updated at <CURRENT_DATE_TIME> from [Current SHA MESSAGE](<CURRENT_SHA_URL>) to [Target SHA MESSAGE](<TARGET_SHA_URL>)
+          # Build updated at <CURRENT_DATE_TIME>
+          # Produced from merging <CURRENT_SHA> (target branch) into <TARGET_SHA> (current branch)
           # Build is available at <BUILD_URL>
 
           # https://www.github.com/<OWNER>/<REPO>/commit/<SHA>
           current_sha_url="https://www.github.com/camc314/gh_actions_test/commit/$current_sha"
           target_sha_url="https://www.github.com/camc314/gh_actions_test/commit/$target_sha"
 
-          echo "Build updated at $(date) from [$(cat current_sha_commit.json | jq -r '.commit.message')]($current_sha_url) to [$(cat target_sha_commit.json | jq -r '.commit.message')]($target_sha_url) \n Build is available at <BUILD_URL>"
-          
+          current_sha_msg=$( cat current_sha_commit.json | jq -r '.commit.message' )
+          target_sha_msg=$( cat target_sha_commit.json | jq -r '.commit.message' )
 
+          # write above to `comment.md`
+          echo "<!-- CI Comment --> \nBuild updated at $(date) \nProduced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url) \nBuild is available at <BUILD_URL>" > comment.md
+
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        continue-on-error: true
+        with:
+          issue-number: github.event.number
+          comment-author: "github-actions[bot]"
+          body-includes: <!-- CI Comment -->
+
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.number }}
+          body-file: comment.md
+          edit-mode: replace
