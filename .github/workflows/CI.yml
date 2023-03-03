@@ -11,11 +11,24 @@ jobs:
     steps:
       - name: Test
         run: |
+          # store to val
           curl -L \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer <YOUR-TOKEN>"\
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            https://api.github.com/repos/openfin/workspace/commits/${{ github.head.sha }}
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer <YOUR-TOKEN>"\
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/openfin/workspace/commits/${{ github.head.sha }} > commit.json
+
+          # log commit message
+          echo $(cat commit.json | jq -r '.commit.message')
+
+          # log commit author
+
+          echo $(cat commit.json | jq -r '.commit.author.name')
+
+          # log commit time
+
+          echo $(cat commit.json | jq -r '.commit.author.date')
+
 
 
 
