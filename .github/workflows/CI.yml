@@ -18,4 +18,5 @@ jobs:
           https://api.github.com/repos/camc314/gh_actions_test/commits/${{ github.sha }} > commit.json
 
           commit_message=$(cat commit.json | jq -r '.commit.message')
+          # Basic Comment
           echo "Commit message: $commit_message"
