@@ -1,0 +1,98 @@
+name: Build and Deploy
+
+on:
+    workflow_call:
+        inputs:
+            build-succeeded:
+                description: 'Whether the build succeeded'
+                required: true
+                type: boolean
+            build-links:
+                description: 'Links to the build'
+                required: false
+                type: string
+
+
+jobs:
+    comment-pr:
+        name: Comment PR
+        runs-on: ubuntu-latest
+        steps:
+          - name: Get Comment
+            run: |
+              curl -L \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/repos/camc314/gh_actions_test/commits/${{ github.sha }} > commit.json
+
+              commit_message=$(cat commit.json | jq -r '.commit.message')
+
+              current_sha=$(echo $commit_message | sed 's/.*Merge \([^ ]*\) into \([^ ]*\).*/\1/')
+              target_sha=$(echo $commit_message | sed 's/.*Merge \([^ ]*\) into \([^ ]*\).*/\2/')
+              echo "Current SHA: $current_sha"
+              echo "Target SHA: $target_sha"
+
+              curl -L \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/repos/camc314/gh_actions_test/commits/$target_sha > target_sha_commit.json
+
+              curl -L \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/repos/camc314/gh_actions_test/commits/$current_sha > current_sha_commit.json
+
+              current_sha_url="https://www.github.com/camc314/gh_actions_test/commit/$current_sha"
+              target_sha_url="https://www.github.com/camc314/gh_actions_test/commit/$target_sha"
+
+              current_sha_msg=$( cat current_sha_commit.json | jq -r '.commit.message' )
+              target_sha_msg=$( cat target_sha_commit.json | jq -r '.commit.message' )
+
+              cur_date=$(date +"%d/%m/%Y %H:%M %Z")
+        
+              echo "<!-- CI Comment -->" > comment.md
+
+              if [ ${{ inputs.build-succeeded }} = true ]; then
+                echo "# ✅ Build Succeeded" >> comment.md
+                echo "" >> comment.md
+
+                echo "Build last updated at $cur_date" >> comment.md
+                echo "" >> comment.md
+
+                echo "Produced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url)" >> comment.md
+                echo "" >> comment.md
+
+                echo "Build is available at <BUILD_URL>" >> comment.md
+
+              else
+                echo "# ❌ Build Failed" >> comment.md
+                echo "" >> comment.md
+
+                echo "Build failed at $cur_date" >> comment.md
+                echo "" >> comment.md
+
+                echo "Produced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url)" >> comment.md
+                echo "" >> comment.md
+
+                echo "An older build _may_ still be available at <BUILD_URL>" >> comment.md
+              fi
+
+          - name: Find Comment
+            uses: peter-evans/find-comment@v2
+            id: fc
+            continue-on-error: true
+            with:
+              issue-number: ${{ github.event.number }}
+              comment-author: "github-actions[bot]"
+              body-includes: <!-- CI Comment -->
+
+          - name: Create or update comment
+            uses: peter-evans/create-or-update-comment@v2
+            with:
+              comment-id: ${{ steps.fc.outputs.comment-id }}
+              issue-number: ${{ github.event.number }}
+              body-file: comment.md
+              edit-mode: replace
