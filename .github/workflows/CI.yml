@@ -28,8 +28,8 @@ jobs:
           current_sha=$(echo $commit_message | sed 's/.*Merge \([^ ]*\) into \([^ ]*\).*/\1/')
           # target_sha=$(echo $commit_message | sed 's/.*Merge \([^ ]*\) into \([^ ]*\).*/\2/')
 
-          echo "First sha: $sha1"
-          echo "Second sha: $sha2"
+          echo "First sha: $current_sha"
+          # echo "Second sha: $target_sha" 
 
           # Get the commit message of the commit that is being merged into `target_sha`
           # curl -L \
@@ -39,14 +39,14 @@ jobs:
           # https://api.github.com/repos/camc314/gh_actions_test/commits/${{ target_sha }} > target_sha_commit.json
 
           # Get the commit message of the commit `target_sha` is being merged into
-          curl -L \
-          -H "Accept: application/vnd.github+json" \
-          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          https://api.github.com/repos/camc314/gh_actions_test/commits/${{ current_sha }} > current_sha_commit.json
+          # curl -L \
+          # -H "Accept: application/vnd.github+json" \
+          # -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          # -H "X-GitHub-Api-Version: 2022-11-28" \
+          # https://api.github.com/repos/camc314/gh_actions_test/commits/${{ current_sha }} > current_sha_commit.json
 
           # Get the commit message of the commit that is being merged into `target_sha`
-          cat current_sha_commit.json | jq -r '.commit.message'
+          # cat current_sha_commit.json | jq -r '.commit.message'
           # cat target_sha_commit.json | jq -r '.commit.message'
 
 
