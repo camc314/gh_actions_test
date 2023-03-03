@@ -62,18 +62,28 @@ jobs:
 
           if [ $build_passed = true ]; then
             echo "# ✅ Build Succeeded" >> comment.md
+            echo "" >> comment.md
+
+            echo "Build last updated at $cur_date" >> comment.md
+            echo "" >> comment.md
+
+            echo "Produced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url)" >> comment.md
+            echo "" >> comment.md
+
+            echo "Build is available at <BUILD_URL>" >> comment.md
+
           else
             echo "# ❌ Build Failed" >> comment.md
+            echo "" >> comment.md
+            
+            echo "Build failed at $cur_date" >> comment.md
+            echo "" >> comment.md
+
+            echo "Produced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url)" >> comment.md
+            echo "" >> comment.md
+
+            echo "An older build _may_ be available at <BUILD_URL>" >> comment.md
           fi
-
-          echo "" >> comment.md
-          echo "Build updated at $cur_date" >> comment.md
-          echo "" >> comment.md
-          echo "Produced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url)" >> comment.md
-          echo "" >> comment.md
-          echo "Build is available at <BUILD_URL>" >> comment.md
-
-          cat comment.md
 
       - name: Find Comment
         uses: peter-evans/find-comment@v2
