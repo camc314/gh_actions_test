@@ -1,0 +1,17 @@
+name: Test Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+    comment-pr:
+        name: Comment PR
+        uses: ./.github/workflows/comment-pr.yml
+        secrets: inherit
+        permissions:
+          pull-requests: write
+        with:
+            build-succeeded: true
+            build-links: "https://www.google.com"
