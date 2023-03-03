@@ -55,14 +55,10 @@ jobs:
           current_sha_msg=$( cat current_sha_commit.json | jq -r '.commit.message' )
           target_sha_msg=$( cat target_sha_commit.json | jq -r '.commit.message' )
 
-          # write Below to `comment.md`
-          # # "<!-- CI Comment --> \nBuild updated at $(date) \nProduced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url) \nBuild is available at <BUILD_URL>"
-          # str="<!-- CI Comment --> \nBuild updated at $(date) \nProduced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url) \nBuild is available at <BUILD_URL>"
-          # echo $str > comment.md
+          cur_date=$(date +"%d/%m/%Y %H:%M %Z")
 
-          echo $'<!-- CI Comment --> \nBuild updated at $(date) \nProduced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url) \nBuild is available at <BUILD_URL>' > comment.md
+          echo $'<!-- CI Comment --> \nBuild updated at $cur_date \nProduced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url) \nBuild is available at <BUILD_URL>' > comment.md
           
-
           cat comment.md
 
       - name: Find Comment
