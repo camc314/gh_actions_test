@@ -12,6 +12,8 @@ jobs:
       - name: Test
         run: |
 
+          echo ${{ toJSON(github) }}
+
           echo https://api.github.com/repos/camc314/gh_actions_test/commits/${{ github.sha }}/
           # store to val
           curl -L \
@@ -40,7 +42,6 @@ jobs:
           # get info for the commit that triggered the workflow
           # git log -1 ${{ github.head.sha }}
           # log github context + stringify it
-          echo ${{ toJSON(github) }}
           # echo the commit sha
           echo ${{ github.sha }}
           # echo the commit message
