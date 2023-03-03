@@ -58,6 +58,14 @@ jobs:
           cur_date=$(date +"%d/%m/%Y %H:%M %Z")
         
           echo "<!-- CI Comment -->" > comment.md
+          build_passed=true
+
+          if [ $build_passed = true ]; then
+            echo "# ✅ Build Succeeded" >> comment.md
+          else
+            echo "# ❌ Build Failed" >> comment.md
+          fi
+
           echo "" >> comment.md
           echo "Build updated at $cur_date" >> comment.md
           echo "" >> comment.md
