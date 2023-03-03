@@ -20,3 +20,6 @@ jobs:
           commit_message=$(cat commit.json | jq -r '.commit.message')
           # Basic Comment
           echo "Commit message: $commit_message"
+
+          current_sha=$(echo $commit_message | sed 's/.*Merge \([^ ]*\) into \([^ ]*\).*/\1/')
+          echo "Current SHA: $current_sha"
