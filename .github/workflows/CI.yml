@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Test
         run: |
+          # log github context
+          echo ${{ github }}
           # echo the commit sha
           echo ${{ github.sha }}
           # echo the commit message
