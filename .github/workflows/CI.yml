@@ -60,6 +60,8 @@ jobs:
           str="<!-- CI Comment --> \nBuild updated at $(date) \nProduced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url) \nBuild is available at <BUILD_URL>"
           echo $str > comment.md
 
+          cat comment.md
+
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
