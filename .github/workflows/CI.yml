@@ -1,0 +1,23 @@
+name: Comment PR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: |
+          # echo the commit sha
+          echo ${{ github.sha }}
+          # echo the commit message
+          echo ${{ github.event.head_commit.message }}
+          # echo the commit author
+          echo ${{ github.event.head_commit.author.name }}
+          # echo the commit time
+          echo ${{ github.event.head_commit.timestamp }}
+          #echo the current time
+          echo $(date)
