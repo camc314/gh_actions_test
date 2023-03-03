@@ -65,7 +65,7 @@ jobs:
                 echo "Produced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url)" >> comment.md
                 echo "" >> comment.md
 
-                echo "Build is available at <BUILD_URL>" >> comment.md
+                echo "Build is available at ${{ inputs.build-links }}" >> comment.md
 
               else
                 echo "# ❌ Build Failed" >> comment.md
@@ -77,7 +77,7 @@ jobs:
                 echo "Produced from merging [$current_sha_msg]($current_sha_url) into [$target_sha_msg]($target_sha_url)" >> comment.md
                 echo "" >> comment.md
 
-                echo "An older build _may_ still be available at <BUILD_URL>" >> comment.md
+                echo "An older build _may_ still be available at ${{ inputs.build-links }}" >> comment.md
               fi
 
           - name: Find Comment
