@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Test
         run: |
+          echo ${{ github.head.sha }}
+          # get info for the commit that triggered the workflow
+          git log -1 ${{ github.head.sha }}
           # log github context + stringify it
           echo ${{ toJSON(github) }}
           # echo the commit sha
