@@ -48,9 +48,6 @@ function readFromStdin() {
     const owner = "openfin";
     const repo = process.argv[2];
 
-    console.log(process.env);
-    console.log(JSON.stringify(github, null, 2));
-
     const stdin = await readFromStdin();
     console.log(`Stdin: "${stdin}"`);
 
