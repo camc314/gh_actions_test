@@ -36,10 +36,12 @@ jobs:
 
                   # echo github.event.pull_request.labels.*.name to json
                   #   echo ${{ toJson(github.event.pull_request.labels.*.name) }}
-                  label=${{ toJson(github.event.pull_request.labels.*.name) }}
+                  #   label=${{ toJson(github.event.pull_request.labels.*.name) }}
 
 
                   echo Hello
+
+                  label=${{ toJson(github.event.pull_request.labels.*.name) }}
                   echo Hello
                   echo Hello
 
