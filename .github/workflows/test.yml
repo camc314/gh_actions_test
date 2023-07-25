@@ -28,20 +28,9 @@ jobs:
               id: check_labels_branch
               #   # join with newline
               run: |
-                  #   label="MERGE\nrelease/dubai"
-                  #   IFS="," read -ra LABELS <<< "${{ join(github.event.pull_request.labels.*.name, ',') }}"
-                  #   joined_labels=$(IFS=$'\n'; echo "${LABELS[*]}")
-                  #   echo "LABELS=$joined_labels" >> $GITHUB_ENV
-                  #   echo ${{ github.event.pull_request.labels.*.name }}
-
-                  # echo github.event.pull_request.labels.*.name to json
-                  #   echo ${{ toJson(github.event.pull_request.labels.*.name) }}
-                  #   label=${{ toJson(github.event.pull_request.labels.*.name) }}
-
-
                   echo Hello
 
-                  label=${{ toJson(github.event.pull_request.labels.*.name) }}
+                  label="${{ toJson(github.event.pull_request.labels.*.name) }}""
                   echo Hello
                   echo Hello
 
