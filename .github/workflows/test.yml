@@ -27,15 +27,17 @@ jobs:
             - name: Check PR labels and branch existence
               id: check_labels_branch
               #   # join with newline
-              #   label="${{ join(github.event.pull_request.labels.*.name,
               run: |
-                  label="MERGE\nrelease/dubai"
+                  #   label="MERGE\nrelease/dubai"
+                  IFS="," read -ra LABELS <<< "${{ join(github.event.pull_request.labels.*.name, ',') }}"
+                  joined_labels=$(IFS=$'\n'; echo "${LABELS[*]}")
+                  #   echo "LABELS=$joined_labels" >> $GITHUB_ENV
 
                   echo Hello
                   echo Hello
 
-                  echo $label|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }}
-                  result=$(echo $label|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }} )
+                  echo $joined_labels|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }}
+                  result=$(echo $joined_labels|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }} )
                   echo "$result"
 
                   if [[ $result == "Success" ]]; then
