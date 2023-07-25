@@ -51,7 +51,9 @@ function readFromStdin() {
     const stdin = await readFromStdin();
     console.log(`Stdin: "${stdin}"`);
     const branchLabels = stdin.split("\n");
-    console.log(`Stdin (split): "${branchLabels}"`);
+    console.log(
+        `Stdin (split): "${branchLabels.map((label) => `"${label}",`)}"`
+    );
     const releaseBranchLabel = branchLabels.find((label) =>
         label.startsWith("release/")
     );
