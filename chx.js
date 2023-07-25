@@ -50,6 +50,14 @@ function readFromStdin() {
 
     const stdin = await readFromStdin();
     console.log(`Stdin: "${stdin}"`);
+
+    // log stdin as char: charcode
+    console.log("~~~~~~~~~~~ STDIN CHARCODES ~~~~~~~~~~~");
+    for (let i = 0; i < stdin.length; i++) {
+        console.log(`"${stdin[i]}": ${stdin.charCodeAt(i)}`);
+    }
+    console.log("~~~~~~~~~~~ STDIN CHARCODES ~~~~~~~~~~~");
+
     const branchLabels = stdin.split("\n");
     console.log(
         `Stdin (split): "${branchLabels.map((label) => `"${label}",`)}"`
