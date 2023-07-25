@@ -44,6 +44,7 @@ function readFromStdin() {
 }
 
 (async function () {
+    console.warn("START SCRIPT");
     const owner = "openfin";
     const repo = process.argv[2];
 
