@@ -1,0 +1,42 @@
+name: Test Workflow2
+
+on:
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    validate_cherry_pick:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        steps:
+            - name: Checkout Main Branch
+              uses: actions/checkout@v3
+
+            - name: Setup Node.js Environment validate
+              uses: actions/setup-node@v3
+              with:
+                  cache: "npm"
+                  node-version: 16
+                  always-auth: true
+                  registry-url: "https://registry.npmjs.org"
+
+            - name: Install Dependencies
+              run: npm ci
+
+            - name: Check PR labels and branch existence
+              id: check_labels_branch
+              #   label="${{ join(github.event.pull_request.labels.*.name, '\n') }}"
+              run: |
+                  label="MERGE\nrelease/dubai"
+
+                  result=$(echo $label|node ./cherrypick-validate workspace ${{ secrets.GITHUB_TOKEN }} )
+                  echo "$result"
+
+                  if [[ $result == "Success" ]]; then
+                    echo "targetBranchExists=true" >> $GITHUB_OUTPUT
+                    echo "targetBranchName=$label" >> $GITHUB_OUTPUT
+                    echo "commitId=${{ github.event.pull_request.merge_commit_sha }}" >> $GITHUB_OUTPUT
+                  else
+                    echo "targetBranchExists=false" >> $GITHUB_OUTPUT
+                  fi
