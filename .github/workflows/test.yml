@@ -30,12 +30,10 @@ jobs:
               run: |
                   echo Hello
 
-                  label="${{ toJson(github.event.pull_request.labels.*.name) }}""
                   echo Hello
                   echo Hello
 
-                  echo $label|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }}
-                  result=$(echo $label|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }} )
+                  result=$(${{ toJson(github.event.pull_request.labels.*.name) }}|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }} )
                   echo "$result"
 
                   if [[ $result == "Success" ]]; then

@@ -1,4 +1,6 @@
 const fetch = require("node-fetch");
+const core = require("@actions/core");
+const github = require("@actions/github");
 
 async function checkBranchExistence(owner, repo, branchLabel, token) {
     const url = `https://api.github.com/repos/${owner}/${repo}/branches/${branchLabel}`;
@@ -44,6 +46,10 @@ function readFromStdin() {
 }
 
 (async function () {
+    // core.
+
+    // github.context.even;
+
     console.warn("START SCRIPT");
     const owner = "openfin";
     const repo = process.argv[2];
