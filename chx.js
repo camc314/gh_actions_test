@@ -50,6 +50,7 @@ function readFromStdin() {
 
     const stdin = await readFromStdin();
     console.log(`Stdin: "${stdin}"`);
+    console.log(`Stdin: "${JSON.parse(stdin)}"`);
 
     // log stdin as char: charcode
     console.log("~~~~~~~~~~~ STDIN CHARCODES ~~~~~~~~~~~");

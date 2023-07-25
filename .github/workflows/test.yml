@@ -35,15 +35,16 @@ jobs:
                   #   echo ${{ github.event.pull_request.labels.*.name }}
 
                   # echo github.event.pull_request.labels.*.name to json
-                  echo ${{ toJson(github.event.pull_request.labels.*.name) }}
+                  #   echo ${{ toJson(github.event.pull_request.labels.*.name) }}
+                  label=${{ toJson(github.event.pull_request.labels.*.name) }}
 
 
                   echo Hello
                   echo Hello
                   echo Hello
 
-                  echo $joined_labels|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }}
-                  result=$(echo $joined_labels|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }} )
+                  echo $label|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }}
+                  result=$(echo $label|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }} )
                   echo "$result"
 
                   if [[ $result == "Success" ]]; then
