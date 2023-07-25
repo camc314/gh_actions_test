@@ -30,7 +30,7 @@ jobs:
               run: |
                   label="MERGE\nrelease/dubai"
 
-                  result=$(echo $label|node ./cherrypick-validate workspace ${{ secrets.GITHUB_TOKEN }} )
+                  result=$(echo $label|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }} )
                   echo "$result"
 
                   if [[ $result == "Success" ]]; then
