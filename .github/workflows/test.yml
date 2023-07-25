@@ -31,6 +31,7 @@ jobs:
                   label="MERGE\nrelease/dubai"
 
                   echo Hello
+                  echo Hello
 
                   echo $label|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }}
                   result=$(echo $label|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }} )
