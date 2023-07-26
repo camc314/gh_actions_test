@@ -60,7 +60,7 @@ function getPrLabels() {
         throw new Error("No Github token provided");
     }
 
-    const releaseBranchLabel = branchLabels.find((label) =>
+    const releaseBranchLabel = prLabels.find((label) =>
         label.startsWith("release/")
     );
 
