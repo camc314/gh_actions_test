@@ -26,6 +26,8 @@ jobs:
 
             - name: Check PR labels and branch existence
               id: check_labels_branch
+              env:
+                  CURRENT_PR_LABELS: ${{ toJson(github.event.pull_request.labels.*.name) }}
               #   # join with newline
               run: |
                   echo Hello
@@ -33,7 +35,7 @@ jobs:
                   echo Hello
                   echo Hello
 
-                  result=$(${{ toJson(github.event.pull_request.labels.*.name) }}|node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }} )
+                  result=$(node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }} )
                   echo "$result"
 
                   if [[ $result == "Success" ]]; then
