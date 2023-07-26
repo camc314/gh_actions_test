@@ -9,6 +9,9 @@ jobs:
     validate_cherry_pick:
         runs-on: ubuntu-latest
         timeout-minutes: 5
+        outputs:
+            targetBranchExists: ${{ steps.check_labels_branch.outputs.targetBranchExists }}
+            targetBranchName: ${{ steps.check_labels_branch.outputs.targetBranchName }}
         steps:
             - name: Checkout Main Branch
               uses: actions/checkout@v3
