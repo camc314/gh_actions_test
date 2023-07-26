@@ -36,13 +36,9 @@ jobs:
                   echo Hello
 
                   node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }}
-                  result=$(node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }} )
-                  echo "$result"
 
-                  if [[ $result == "Success" ]]; then
-                    echo "targetBranchExists=true" >> $GITHUB_OUTPUT
-                    echo "targetBranchName=$label" >> $GITHUB_OUTPUT
-                    echo "commitId=${{ github.event.pull_request.merge_commit_sha }}" >> $GITHUB_OUTPUT
-                  else
-                    echo "targetBranchExists=false" >> $GITHUB_OUTPUT
-                  fi
+
+                  # log the output (targetBranchExists, targetBranchName)
+
+                  echo ${{ steps.check_labels_branch.outputs.targetBranchExists }}
+                  echo ${{ steps.check_labels_branch.outputs.targetBranchName }}
