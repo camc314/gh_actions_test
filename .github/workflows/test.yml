@@ -35,6 +35,7 @@ jobs:
                   echo Hello
                   echo Hello
 
+                  node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }}
                   result=$(node ./chx.js workspace ${{ secrets.GITHUB_TOKEN }} )
                   echo "$result"
 
