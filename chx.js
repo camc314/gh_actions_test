@@ -64,12 +64,13 @@ function getPrLabels() {
         label.startsWith("release/")
     );
 
-    console.log(`Found release branch label: ${releaseBranchLabel}`);
-
     if (!releaseBranchLabel) {
+        console.log(`No release branch label found`);
         core.setOutput("targetBranchExists", false);
         process.exit(0);
     }
+
+    console.log(`Found release branch label: ${releaseBranchLabel}`);
 
     const branchExists = await checkBranchExistence(
         owner,

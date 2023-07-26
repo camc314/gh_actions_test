@@ -39,6 +39,9 @@ jobs:
 
 
                   # log the output (targetBranchExists, targetBranchName)
+            - name: Log output
+              run: |
+
 
                   echo ${{ steps.check_labels_branch.outputs.targetBranchExists }}
                   echo ${{ steps.check_labels_branch.outputs.targetBranchName }}
