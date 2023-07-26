@@ -43,5 +43,5 @@ jobs:
               run: |
 
 
-                  echo ${{ steps.check_labels_branch.outputs.targetBranchExists }}
-                  echo ${{ steps.check_labels_branch.outputs.targetBranchName }}
+                  echo Target Branch Exists? ${{ steps.check_labels_branch.outputs.targetBranchExists }}
+                  echo Target Branch Name ${{ steps.check_labels_branch.outputs.targetBranchName }}
