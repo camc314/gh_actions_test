@@ -45,3 +45,13 @@ jobs:
 
                   echo Target Branch Exists? ${{ steps.check_labels_branch.outputs.targetBranchExists }}
                   echo Target Branch Name ${{ steps.check_labels_branch.outputs.targetBranchName }}
+
+    log_results:
+        runs-on: ubuntu-latest
+        timeout-minutes: 5
+        needs: validate_cherry_pick
+        steps:
+            - name: Log results from validate_cherry_pick
+              run: |
+                  echo Target Branch Exists? ${{ needs.validate_cherry_pick.outputs.targetBranchExists }}
+                  echo Target Branch Name ${{ needs.validate_cherry_pick.outputs.targetBranchName }}
