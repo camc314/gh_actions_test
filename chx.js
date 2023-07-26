@@ -51,7 +51,9 @@ function readFromStdin() {
     // github.context.even;
 
     console.warn("START SCRIPT");
-    console.log(process.env.CURRENT_PR_LABELS);
+    console.log(
+        "process.env.CURRENT_PR_LABELS: '" + process.env.CURRENT_PR_LABELS + "'"
+    );
     console.log(JSON.parse(process.env.CURRENT_PR_LABELS));
     const owner = "openfin";
     const repo = process.argv[2];
